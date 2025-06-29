@@ -1,0 +1,378 @@
+#base robot_giant.pop
+#base robot_standard.pop
+#base robot_gatebot.pop
+
+WaveSchedule
+{
+	StartingCurrency 1200
+	RobotLimit 45
+	AllowBotExtraSlots 1
+	RespawnWaveTime 3
+	FixedRespawnWaveTime Yes
+	CanBotsAttackWhileInSpawnRoom No
+	AddSentryBusterWhenDamageDealtExceeds 3000
+	Advanced 1
+	Wave
+	{
+		// Демонстрация новых возможностей WaveSpawn
+		Checkpoint "Yes"
+		StartWaveOutput
+		{
+			Target "wave_start_relay"
+			Action "Trigger"
+		}
+		DoneOutput
+		{
+			Target "wave_finished_relay"
+			Action "Trigger"
+		}
+		WaveInitOutput
+		{
+			Target "wave_init_relay"
+			Action "Trigger"
+		}
+		Parameters
+		{
+			delay "1.0"
+			repeat "3"
+		}
+		WaveSpawn
+		{
+			// Быстрые скауты с рандомным спавном
+			Name "Scout Rush"
+			Where "spawnbot"
+			TotalCount 24
+			MaxActive 8
+			SpawnCount 4
+			TotalCurrency 200
+			WaitBeforeStarting 5
+			RandomSpawn 1
+			TFBot
+			{
+				Class "Scout"
+				Skill "Hard"
+				Item "Force-A-Nature"
+				Item "Pretty Boy's Pocket Pistol"
+				ItemAttributes
+				{
+					ItemName "Force-A-Nature"
+					"damage bonus" 1.2
+					"faster reload rate" 0.85
+				}
+			}
+		}
+		WaveSpawn
+		{
+			// Dragon Squad - элитные пиро с усиленным огнём
+			Name "Dragon Squad"
+			Where "spawnbot"
+			TotalCount 15
+			MaxActive 5
+			SpawnCount 3
+			TotalCurrency 200
+			WaitForAllSpawned "Scout Rush"
+			TFBot
+			{
+				Name "Dragon Pyro"
+				Class "Pyro"
+				Skill "Expert"
+				Item "The Dragon's Fury"
+				Item "The Burning Bandana"
+				CharacterAttributes
+				{
+					"damage bonus" 1.25
+					"fire rate bonus" 0.8
+					"weapon burn time increased" 1.5
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "Buff Support"
+			Where "spawnbot"
+			TotalCount 12
+			MaxActive 4
+			SpawnCount 2
+			TotalCurrency 200
+			Support 1
+		}
+	}
+	Wave
+	{
+		// Демонстрация всех новых возможностей TFBot
+		Checkpoint "Yes"
+		StartWaveOutput
+		{
+			Target "wave_start_relay"
+			Action "Trigger"
+		}
+		DoneOutput
+		{
+			Target "wave_finished_relay"
+			Action "Trigger"
+		}
+		InitWaveOutput
+		{
+			Target "second_wave_init_relay"
+			Action "Trigger"
+		}
+		WaveSpawn
+		{
+			Name "Sniper Squad"
+			Where "spawnbot_mission_sniper"
+			TotalCount 3
+			MaxActive 3
+			SpawnCount 3
+			TotalCurrency 200
+			TFBot
+			{
+				Name "Limited Range Sniper"
+				Class "Sniper"
+				Skill "Expert"
+				ClassIcon "sniper_bow"
+				MaxVisionRange 2000
+				Item "The Huntsman"
+				Item "The Anger"
+				CharacterAttributes
+				{
+					"damage bonus" 1.25
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "Melee Squad"
+			Where "spawnbot"
+			TotalCount 12
+			MaxActive 4
+			SpawnCount 4
+			TotalCurrency 200
+			WaitBeforeStarting 10
+			RandomSpawn 1
+			TFBot
+			{
+				Name "Boxing Heavy"
+				Class "HeavyWeapons"
+				Skill "Expert"
+				ClassIcon "heavy_fists"
+				WeaponRestrictions "MeleeOnly"
+				Action "Mobber"
+				Item "The Killing Gloves of Boxing"
+				CharacterAttributes
+				{
+					"move speed bonus" 1.3
+					"damage bonus" 1.5
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "Spy Squad"
+			Where "spawnbot_mission_spy"
+			TotalCount 6
+			MaxActive 2
+			SpawnCount 2
+			TotalCurrency 200
+			WaitForAllDead "Melee Squad"
+			TFBot
+			{
+				Name "Teleporting Spy"
+				Class "Spy"
+				Skill "Expert"
+				Scale 1.2
+				ClassIcon "spy_kunai"
+				WeaponRestrictions "MeleeOnly"
+				TeleportWhere "spawnbot_flankers"
+				UseCustomModel "spy.mdl"
+				Item "Conniver's Kunai"
+			}
+		}
+		WaveSpawn
+		{
+			Name "Boss Squad"
+			Where "spawnbot"
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			TotalCurrency 200
+			WaitForAllDead "Spy Squad"
+			TFBot
+			{
+				Attributes MiniBoss
+				Attributes UseBossHealthBar
+				Attributes AlwaysCrit
+				Name "Ultimate Boss"
+				Class "HeavyWeapons"
+				Health 10000
+				Skill "Expert"
+				Scale 1.8
+				ClassIcon "heavy_deflector_giant"
+				WeaponRestrictions "PrimaryOnly"
+				Action "Mobber"
+				Item "Deflector"
+				Item "The Team Captain"
+				CharacterAttributes
+				{
+					"move speed bonus" 0.5
+					"damage bonus" 2.0
+					"override footstep sound set" 4
+				}
+			}
+		}
+	}
+	Wave
+	{
+		Checkpoint "Yes"
+		StartWaveOutput
+		{
+			Target "wave_start_relay"
+			Action "Trigger"
+		}
+		DoneOutput
+		{
+			Target "mission_finished_relay"
+			Action "Trigger"
+		}
+		WaveSpawn
+		{
+			Name "Demo Boss"
+			Where "spawnbot"
+			TotalCount 1
+			TotalCurrency 333
+			TFBot
+			{
+				Attributes MiniBoss
+				Attributes UseBossHealthBar
+				Attributes HoldFireUntilFullReload
+				Name "Giant Demoman Boss"
+				Class "Demoman"
+				Health 7500
+				Skill "Expert"
+				Item "The Iron Bomber"
+				Item "The Chargin' Targe"
+				CharacterAttributes
+				{
+					"move speed bonus" 0.5
+					"damage bonus" 2.0
+					"faster reload rate" 0.6
+					"projectile spread angle penalty" 1
+					"charge recharge rate increased" 7
+					"charge impact damage increased" 1.5
+					"override footstep sound set" 4
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "Tank Alpha"
+			Where "tankpath_1"
+			TotalCount 1
+			TotalCurrency 166
+			Tank
+			{
+				Name "tankboss"
+				Health 20000
+				Speed 85
+			}
+		}
+		WaveSpawn
+		{
+			Name "Tank Beta"
+			Where "tankpath_2"
+			TotalCount 1
+			TotalCurrency 166
+			WaitForAllSpawned "Tank Alpha"
+			Tank
+			{
+				Name "tankboss"
+				Health 20000
+				Speed 85
+			}
+		}
+		WaveSpawn
+		{
+			Name "Mixed Support"
+			Where "spawnbot"
+			TotalCount 20
+			MaxActive 6
+			SpawnCount 3
+			TotalCurrency 333
+			Support 1
+			Squad
+			{
+				TFBot
+				{
+					Name "Dragon Pyro"
+					Class "Pyro"
+					Skill "Expert"
+					Item "The Dragon's Fury"
+					Item "The Burning Bandana"
+					CharacterAttributes
+					{
+						"damage bonus" 1.25
+						"fire rate bonus" 0.8
+						"weapon burn time increased" 1.5
+					}
+				}
+				TFBot
+				{
+					Attributes AlwaysCrit
+					Name "Crit Demo"
+					Class "Demoman"
+					Skill "Expert"
+					Item "The Loch-n-Load"
+					CharacterAttributes
+					{
+						"faster reload rate" 0.8
+						"projectile speed increased" 1.2
+					}
+				}
+			}
+		}
+	}
+	Mission
+	{
+		Objective "DestroySentries"
+		InitialCooldown 30
+		Where "spawnbot_mission_sentrybuster"
+		BeginAtWave 1
+		RunForThisManyWaves 3
+		CooldownTime 30
+		TFBot
+		{
+			Template "T_TFBot_SentryBuster"
+		}
+	}
+	Mission
+	{
+		Objective "Spy"
+		InitialCooldown 20
+		Where "spawnbot_mission_spy"
+		BeginAtWave 3
+		RunForThisManyWaves 1
+		CooldownTime 20
+		DesiredCount 4
+		TFBot
+		{
+			Class "Spy"
+			Skill "Expert"
+		}
+	}
+	Mission
+	{
+		Objective "Sniper"
+		InitialCooldown 30
+		Where "spawnbot_mission_sniper"
+		BeginAtWave 4
+		RunForThisManyWaves 1
+		CooldownTime 30
+		DesiredCount 2
+		TFBot
+		{
+			Name "Elite Sniper"
+			Class "Sniper"
+			Skill "Expert"
+			Item "The Hitman's Heatmaker"
+		}
+	}
+}
