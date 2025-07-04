@@ -3,10 +3,10 @@
 """
 import os
 import unittest
-from pop_file_reader.compiler import PopFileCompiler
-from pop_file_reader.models.wave import Wave
-from pop_file_reader.models.wave_spawn import WaveSpawn
-from pop_file_reader.models.tf_bot import TFBot
+from pop_file_parser.compiler import PopFileCompiler
+from pop_file_parser.models.wave import Wave
+from pop_file_parser.models.wave_spawn import WaveSpawn
+from pop_file_parser.models.tf_bot import TFBot
 
 class TestValveFormat(unittest.TestCase):
     def setUp(self):

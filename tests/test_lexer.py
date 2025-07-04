@@ -2,7 +2,7 @@
 Тесты для лексического анализатора.
 """
 import pytest
-from pop_file_reader.lexer import Lexer, Token
+from pop_file_parser.lexer import Lexer, Token
 
 @pytest.fixture
 def lexer():

@@ -3,7 +3,7 @@
 """
 import pytest
 from pathlib import Path
-from pop_file_reader import PopFileCompiler, Robot, Wave
+from pop_file_parser import PopFileCompiler, Robot, Wave
 
 TEST_POP = """
 {

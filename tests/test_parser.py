@@ -2,7 +2,7 @@
 Тесты для парсера.
 """
 import pytest
-from pop_file_reader.parser import Parser, Mission, Wave, Robot, Template
+from pop_file_parser.parser import Parser, Mission, Wave, Robot, Template
 
 TEST_POP = """
 {

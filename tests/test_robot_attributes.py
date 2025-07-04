@@ -2,7 +2,7 @@
 Тесты для проверки работы с атрибутами роботов.
 """
 import pytest
-from pop_file_reader import PopFileCompiler, Robot, Wave
+from pop_file_parser import PopFileCompiler, Robot, Wave
 
 def test_multiple_items():
     """Тест для множественных предметов."""

@@ -5,7 +5,7 @@ import os
 import tempfile
 from pathlib import Path
 import pytest
-from pop_file_reader import PopFileCompiler, Robot, Wave, WaveSpawn
+from pop_file_parser import PopFileCompiler, Robot, Wave, WaveSpawn
 
 def test_set_mission_info():
     compiler = PopFileCompiler()

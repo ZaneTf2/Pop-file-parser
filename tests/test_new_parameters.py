@@ -2,10 +2,10 @@
 Тесты для новых параметров в моделях MvM миссии.
 """
 import pytest
-from pop_file_reader.models.mission_info import MissionInfo
-from pop_file_reader.models.mission import Mission
-from pop_file_reader.models.tf_bot import TFBot
-from pop_file_reader.models.wave_spawn import WaveSpawn
+from pop_file_parser.models.mission_info import MissionInfo
+from pop_file_parser.models.mission import Mission
+from pop_file_parser.models.tf_bot import TFBot
+from pop_file_parser.models.wave_spawn import WaveSpawn
 
 def test_tf_bot_new_fields():
     """Тест новых полей TFBot."""
