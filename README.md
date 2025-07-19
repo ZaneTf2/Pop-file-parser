@@ -155,12 +155,6 @@ template = Template(...)
 template.add_comments("Base template for engineers")
 ```
 
-## Installation
-
-```bash
-pip install pop-file-reader
-```
-
 ## Usage
 
 ```python
