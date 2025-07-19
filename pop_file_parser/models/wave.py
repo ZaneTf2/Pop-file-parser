@@ -19,6 +19,9 @@ class Wave(CommentableMixin):
     done_output: Optional[Any] = None
     init_wave_output: Optional[Any] = None
     custom_outputs: List[Any] = field(default_factory=list)
+    custom: Optional[Any] = None  # Для хранения пользовательских блоков
+    description: str = ""
+    sound: str = ""
     # comment унаследован и уже идёт с дефолтом
 
     def add_custom_output(self, name: str, target: str = "", action: str = "", custom_settings: Any = "") -> None:
@@ -70,7 +73,15 @@ class Wave(CommentableMixin):
         # Добавляем кастомные выводы
         for output in self.custom_outputs:
             result.update(output.to_valve_format())
+        if self.custom:
+            result.update(self.custom.to_valve_format())
             
+        if self.description:
+            result["Description"] = self.description
+            
+        if self.sound:
+            result["Sound"] = self.sound
+        
         # Добавляем спавны
         for spawn in self.wave_spawns:
             if "WaveSpawn" not in result:

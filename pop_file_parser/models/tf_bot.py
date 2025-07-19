@@ -20,12 +20,13 @@ class TFBot(CommentableMixin):
     item_attributes: Dict[str, Any] = field(default_factory=dict)
     character_attributes: Dict[str, Any] = field(default_factory=dict)
     weapons: Dict[str, Dict[str, Any]] = field(default_factory=dict)
-    class_icon: str = ""  # Новое поле
-    max_vision_range: int = 0  # Новое поле
-    weapon_restrictions: str = ""  # Новое поле
-    action: str = ""  # Новое поле
-    teleport_where: str = ""  # Новое поле
-    use_custom_model: str = ""  # Новое поле
+    class_icon: str = ""  # Новое поле, добавлено для иконки класса бота
+    max_vision_range: int = 0  # Новое поле, добавлено для максимального радиуса видимости
+    weapon_restrictions: str = ""  # Новое поле, добавлено для ограничений оружия
+    action: str = ""  # Новое поле, добавлено для действия бота
+    teleport_where: str = ""  # Новое поле, добавлено для места телепортации
+    use_custom_model: str = ""  # Новое поле, добавлено для использования пользовательской модели
+    behavior_modifiers: str = ""  # Новое поле, добавлено для модификаторов поведения бота
     
     # comment унаследован и уже идёт с дефолтом
 
@@ -81,6 +82,9 @@ class TFBot(CommentableMixin):
             for item in self.items:
                 result.setdefault("Item", []).append(item)
                 
+        if self.behavior_modifiers:
+            result["BehaviorModifiers"] = self.behavior_modifiers
+            
         if self.tags:
             result["Tags"] = self.tags
             
@@ -89,7 +93,7 @@ class TFBot(CommentableMixin):
             
         if self.character_attributes:
             result["CharacterAttributes"] = self.character_attributes
-            
+        
         if self.weapons:
             for weapon_name, weapon_attrs in self.weapons.items():
                 weapon_data = {"name": weapon_name}

@@ -27,6 +27,7 @@ class WaveSpawn(CommentableMixin):
     first_spawn_output: Optional[Dict[str, Any]] = None
     last_spawn_output: Optional[Dict[str, Any]] = None
     done_output: Optional[Dict[str, Any]] = None
+    random_choice: bool = False  # Новое поле, для поддержки случайного выбора
     # comment унаследован и уже идёт с дефолтом
 
     def to_valve_format(self) -> Dict[str, Any]:
